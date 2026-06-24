@@ -1,15 +1,14 @@
 // Centralized content for Victoria Alabaster International Women Ministry
 // Edit here to update copy across the site.
 
-import imgAnnualConference from '../assets/gallery_annual_conference.png'
-import imgFoodDistribution from '../assets/gallery_food_distribution.png'
-import imgVocationalSkills from '../assets/gallery_vocational_skills.png'
-import imgSchoolResumption from '../assets/gallery_school_resumption.png'
-import imgWidowsAppreciation from '../assets/gallery_widows_appreciation.png'
-import imgCommunityHealth from '../assets/gallery_community_health.png'
-import imgYouthMentorship from '../assets/hero_slide_3.png'
-import imgShelterRenovation from '../assets/project_shelter.png'
-import imgFundraisingGala from '../assets/hero_slide_2.png'
+import imgGallery1 from '../assets/gallery1.jpg'
+import imgGallery2 from '../assets/gallery2.jpg'
+import imgGallery3 from '../assets/gallery3.jpg'
+import imgGallery4 from '../assets/gallery4.jpg'
+import imgGallery5 from '../assets/gallery5.jpg'
+import imgNeedFood from '../assets/need_food_supplies.png'
+import imgNeedClothing from '../assets/need_clothing.png'
+import imgNeedEssentials from '../assets/need_essentials.png'
 
 export const siteInfo = {
   name: 'Victoria Alabaster International Women Ministry',
@@ -109,9 +108,9 @@ export const needsCategories = {
     { title: 'Educational Materials', description: 'Textbooks, uniforms, bags, and stationery for the new school term.' },
   ],
   community: [
-    { title: 'Food Supplies', description: 'Staple food packages — rice, beans, oil, and grains — for vulnerable households.' },
-    { title: 'Clothing', description: 'Seasonal clothing donations for children, widows, and displaced families.' },
-    { title: 'Essential Needs', description: 'Hygiene kits, bedding, and household basics for families starting over.' },
+    { title: 'Food Supplies', description: 'Staple food packages — rice, beans, oil, and grains — for vulnerable households.', image: imgNeedFood },
+    { title: 'Clothing', description: 'Seasonal clothing donations for children, widows, and displaced families.', image: imgNeedClothing },
+    { title: 'Essential Needs', description: 'Hygiene kits, bedding, and household basics for families starting over.', image: imgNeedEssentials },
   ],
   empowerment: [
     { title: 'Widows', description: 'Skills training and small grants to start sustainable, income-generating work.' },
@@ -169,7 +168,7 @@ export const team = {
 export const offices = [
   {
     country: 'Nigeria Office',
-    address: ' XXXXXXXLagos, Nigeria',
+    address: ' Akure Lagos, Nigeria',
     phone: '+234 80 XXXXXXXXX',
     email: 'info@placeholder.com',
   },
@@ -184,15 +183,11 @@ export const offices = [
 export const galleryCategories = ['All', 'Events', 'Outreach Activities', 'Programs', 'Community Impact']
 
 export const galleryItems = [
-  { id: 1, category: 'Events', title: 'Annual Women\'s Conference', color: 'from-purple-400 to-purple-600', image: imgAnnualConference },
-  { id: 2, category: 'Outreach Activities', title: 'Food Distribution Drive', color: 'from-gold-300 to-gold-500', image: imgFoodDistribution },
-  { id: 3, category: 'Programs', title: 'Vocational Skills Training', color: 'from-purple-300 to-purple-500', image: imgVocationalSkills },
-  { id: 4, category: 'Community Impact', title: 'School Resumption Support', color: 'from-gold-200 to-gold-400', image: imgSchoolResumption },
-  { id: 5, category: 'Events', title: 'Widows Appreciation Day', color: 'from-purple-500 to-purple-700', image: imgWidowsAppreciation },
-  { id: 6, category: 'Outreach Activities', title: 'Community Health Visit', color: 'from-gold-400 to-gold-600', image: imgCommunityHealth },
-  { id: 7, category: 'Programs', title: 'Youth Mentorship Workshop', color: 'from-purple-400 to-purple-600', image: imgYouthMentorship },
-  { id: 8, category: 'Community Impact', title: 'Shelter Renovation Day', color: 'from-gold-300 to-gold-500', image: imgShelterRenovation },
-  { id: 9, category: 'Events', title: 'Fundraising Gala Evening', color: 'from-purple-300 to-purple-500', image: imgFundraisingGala },
+  { id: 1, category: 'Outreach Activities', title: 'Food & Supply Distribution', color: 'from-purple-400 to-purple-600', image: imgGallery1 },
+  { id: 2, category: 'Programs', title: 'Empowering Small Businesses', color: 'from-gold-300 to-gold-500', image: imgGallery2 },
+  { id: 3, category: 'Community Impact', title: 'Educational Support Program', color: 'from-purple-300 to-purple-500', image: imgGallery3 },
+  { id: 4, category: 'Outreach Activities', title: 'School Children Assistance', color: 'from-gold-200 to-gold-400', image: imgGallery4 },
+  { id: 5, category: 'Community Impact', title: 'Nurturing Future Generations', color: 'from-purple-500 to-purple-700', image: imgGallery5 },
 ]
 
 export const testimonials = [

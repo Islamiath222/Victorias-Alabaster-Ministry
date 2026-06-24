@@ -290,7 +290,7 @@ export default function Media() {
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="e.g. Jane Doe"
+                          placeholder="Your name"
                           className="w-full rounded-xl border border-purple-200/60 bg-white px-4 py-3 text-sm text-purple-950 placeholder-ink/40 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-all"
                         />
                       </div>

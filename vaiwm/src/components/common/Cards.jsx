@@ -30,12 +30,17 @@ export function NumberedImpactCard({ number, title, description, delay = 0 }) {
   )
 }
 
-export function SimpleNeedCard({ title, description, delay = 0 }) {
+export function SimpleNeedCard({ title, description, image, delay = 0 }) {
   return (
     <Reveal delay={delay}>
-      <div className="bg-white rounded-2xl p-6 h-full shadow-card border border-purple-50 hover:border-gold-200 transition-colors duration-300">
+      <div className="bg-white rounded-2xl p-6 h-full shadow-card border border-purple-50 hover:border-gold-200 transition-colors duration-300 flex flex-col">
+        {image && (
+          <div className="w-full h-48 mb-5 rounded-xl overflow-hidden shrink-0 shadow-sm border border-purple-50">
+            <img src={image} alt={title} className="w-full h-full object-cover" />
+          </div>
+        )}
         <h4 className="font-display font-semibold text-lg text-purple-900 mb-2">{title}</h4>
-        <p className="text-sm text-ink/70 leading-relaxed">{description}</p>
+        <p className="text-sm text-ink/70 leading-relaxed flex-grow">{description}</p>
       </div>
     </Reveal>
   )

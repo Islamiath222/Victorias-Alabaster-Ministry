@@ -11,7 +11,7 @@ import { supportAreas, projects, galleryItems } from '../data/content';
 import heroBg from '../assets/hero_bg.png';
 import heroSlide2 from '../assets/hero_slide_2.png';
 import heroSlide3 from '../assets/hero_slide_3.png';
-import womanImg from '../assets/woman_happy_church.png';
+import womanImg from '../assets/victoria_main.jpg';
 import whoWeAreImg from '../assets/who_we_are.jpg';
 import projectOfficeImg from '../assets/project_office.png';
 import projectShelterImg from '../assets/project_shelter.png';

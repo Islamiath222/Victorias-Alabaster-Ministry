@@ -95,3 +95,16 @@ select:focus-visible {
 .eyebrow {
   @apply text-gold-600 font-semibold uppercase tracking-[0.18em] text-xs md:text-sm;
 }
+
+/* Scroll Reveal Global Utility */
+.section-reveal-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.section-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

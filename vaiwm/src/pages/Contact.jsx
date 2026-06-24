@@ -161,7 +161,7 @@ export default function Contact() {
                     className={`w-full px-4 py-3 rounded-xl border ${
                       errors.name ? 'border-red-400' : 'border-purple-100'
                     } focus:border-purple outline-none transition-colors`}
-                    placeholder="Jane Doe"
+                    placeholder="Your name"
                   />
                   {errors.name && (
                     <p id="name-error" className="text-red-500 text-xs mt-1.5">
