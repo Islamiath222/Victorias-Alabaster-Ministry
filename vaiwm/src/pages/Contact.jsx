@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FaLocationDot, FaPhone, FaEnvelope, FaCircleCheck, FaPaperPlane, FaFacebookF, FaInstagram, FaXTwitter, FaYoutube } from 'react-icons/fa6'
+import { FaLocationDot, FaWhatsapp, FaEnvelope, FaCircleCheck, FaPaperPlane, FaFacebookF, FaInstagram, FaXTwitter } from 'react-icons/fa6'
 import PageHero from '../components/common/PageHero'
 import SectionHeading from '../components/common/SectionHeading'
 import Reveal from '../components/common/Reveal'
@@ -8,8 +8,8 @@ import { offices } from '../data/content'
 function OfficeCard({ office, delay }) {
   return (
     <Reveal delay={delay}>
-      <div className="bg-white rounded-2xl p-7 shadow-card h-full border border-purple-50">
-        <h3 className="font-display font-semibold text-xl text-purple-900 mb-4">
+      <div className="bg-white rounded-2xl p-7 shadow-card h-full border border-green-50">
+        <h3 className="font-display font-semibold text-xl text-green-900 mb-4">
           {office.country}
         </h3>
         <div className="space-y-3 text-sm text-ink/75">
@@ -18,14 +18,13 @@ function OfficeCard({ office, delay }) {
             {office.address}
           </p>
           <p className="flex items-center gap-3">
-            <FaPhone className="text-gold-500 shrink-0" />
-            <a href={`tel:${office.phone.replace(/[^+\d]/g, '')}`} className="hover:text-purple">
-              {office.phone}
+            <a href={`https://wa.me/${office.phone.replace(/[^\d]/g, '')}`} className="flex items-center gap-1 hover:text-green-200">
+              <FaWhatsapp className="text-gold-500 shrink-0" /> Contact us on WhatsApp
             </a>
           </p>
           <p className="flex items-center gap-3">
             <FaEnvelope className="text-gold-500 shrink-0" />
-            <a href={`mailto:${office.email}`} className="hover:text-purple">
+            <a href={`mailto:${office.email}`} className="hover:text-green">
               {office.email}
             </a>
           </p>
@@ -39,6 +38,8 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const validate = () => {
     const newErrors = {}
@@ -64,17 +65,44 @@ export default function Contact() {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = validate()
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
-    // Placeholder: integrate with backend/email service here.
-    setSubmitted(true)
-    setFormData({ name: '', email: '', phone: '', message: '' })
-    setErrors({})
+
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: 'a2464118-a30b-446b-872a-acee6c1c56cd',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitted(true)
+        setFormData({ name: '', email: '', phone: '', message: '' })
+        setErrors({})
+      } else {
+        setSubmitError('Something went wrong. Please try again or contact us directly.')
+      }
+    } catch {
+      setSubmitError('We could not send your message. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -96,7 +124,7 @@ export default function Contact() {
 
       {/* Contact Form */}
       <section className="section-pad bg-white">
-        <div className="container-page grid md:grid-cols-2 gap-12">
+        <div className="container-page grid lg:grid-cols-2 gap-12">
           <Reveal className="flex flex-col h-full justify-between">
             <div>
               <SectionHeading eyebrow="Send a Message" title="Get in touch" />
@@ -104,21 +132,22 @@ export default function Contact() {
                 Fill out the form and our team will respond within 2–3 business days.
               </p>
             </div>
-            <div className="mt-6 md:mt-0 pt-6 border-t border-purple-100">
-              <h4 className="font-display font-semibold text-purple-900 mb-3">Connect With Us</h4>
+            <div className="mt-6 md:mt-0 pt-6 border-t border-green-100">
+              <h4 className="font-display font-semibold text-green-900 mb-3">Connect With Us</h4>
               <p className="text-sm text-ink/65 mb-4 font-body">Follow our journey and see the direct impact of your support.</p>
               <div className="flex gap-3">
                 {[
-                  { Icon: FaFacebookF, label: 'Facebook' },
-                  { Icon: FaInstagram, label: 'Instagram' },
-                  { Icon: FaXTwitter, label: 'Twitter' },
-                  { Icon: FaYoutube, label: 'YouTube' }
-                ].map(({ Icon, label }, i) => (
+                  { Icon: FaFacebookF, label: 'Facebook', href: 'https://www.facebook.com/VAIWM' },
+                  { Icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/victoriaalabaster007/' },
+                  { Icon: FaXTwitter, label: 'Twitter', href: 'https://x.com/VictoriaAlabast' }
+                ].map(({ Icon, label, href }, i) => (
                   <a
                     key={i}
-                    href="#"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={`Connect with us on ${label}`}
-                    className="w-10 h-10 rounded-full bg-purple-50 text-purple hover:bg-gold hover:text-purple-900 flex items-center justify-center transition-colors duration-300"
+                    className="w-10 h-10 rounded-full bg-green-50 text-green hover:bg-gold hover:text-green-900 flex items-center justify-center transition-colors duration-300"
                   >
                     <Icon size={16} />
                   </a>
@@ -129,9 +158,9 @@ export default function Contact() {
 
           <Reveal delay={0.1}>
             {submitted ? (
-              <div className="bg-purple-50 rounded-2xl p-8 flex flex-col items-center text-center">
+              <div className="bg-green-50 rounded-2xl p-8 flex flex-col items-center text-center">
                 <FaCircleCheck className="text-gold-500 text-4xl mb-4" />
-                <h3 className="font-display font-semibold text-xl text-purple-900 mb-2">
+                <h3 className="font-display font-semibold text-xl text-green-900 mb-2">
                   Message sent successfully
                 </h3>
                 <p className="text-ink/70 text-sm">
@@ -146,8 +175,20 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                {/* Web3Forms access key — public, safe to include in frontend */}
+                <input type="hidden" name="access_key" value="a2464118-a30b-446b-872a-acee6c1c56cd" />
+
+                {submitError && (
+                  <div role="alert" className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" className="mt-0.5 shrink-0">
+                      <circle cx="12" cy="12" r="10" />
+                      <path strokeLinecap="round" d="M12 8v4m0 4h.01" />
+                    </svg>
+                    <p className="text-red-600 text-xs leading-relaxed">{submitError}</p>
+                  </div>
+                )}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-purple-900 mb-1.5">
+                  <label htmlFor="name" className="block text-sm font-medium text-green-900 mb-1.5">
                     Full Name
                   </label>
                   <input
@@ -159,8 +200,8 @@ export default function Contact() {
                     aria-invalid={!!errors.name}
                     aria-describedby={errors.name ? 'name-error' : undefined}
                     className={`w-full px-4 py-3 rounded-xl border ${
-                      errors.name ? 'border-red-400' : 'border-purple-100'
-                    } focus:border-purple outline-none transition-colors`}
+                      errors.name ? 'border-red-400' : 'border-green-100'
+                    } focus:border-green outline-none transition-colors`}
                     placeholder="Your name"
                   />
                   {errors.name && (
@@ -171,7 +212,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-purple-900 mb-1.5">
+                  <label htmlFor="email" className="block text-sm font-medium text-green-900 mb-1.5">
                     Email
                   </label>
                   <input
@@ -183,8 +224,8 @@ export default function Contact() {
                     aria-invalid={!!errors.email}
                     aria-describedby={errors.email ? 'email-error' : undefined}
                     className={`w-full px-4 py-3 rounded-xl border ${
-                      errors.email ? 'border-red-400' : 'border-purple-100'
-                    } focus:border-purple outline-none transition-colors`}
+                      errors.email ? 'border-red-400' : 'border-green-100'
+                    } focus:border-green outline-none transition-colors`}
                     placeholder="jane@example.com"
                   />
                   {errors.email && (
@@ -195,7 +236,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-purple-900 mb-1.5">
+                  <label htmlFor="phone" className="block text-sm font-medium text-green-900 mb-1.5">
                     Phone Number
                   </label>
                   <input
@@ -207,8 +248,8 @@ export default function Contact() {
                     aria-invalid={!!errors.phone}
                     aria-describedby={errors.phone ? 'phone-error' : undefined}
                     className={`w-full px-4 py-3 rounded-xl border ${
-                      errors.phone ? 'border-red-400' : 'border-purple-100'
-                    } focus:border-purple outline-none transition-colors`}
+                      errors.phone ? 'border-red-400' : 'border-green-100'
+                    } focus:border-green outline-none transition-colors`}
                     placeholder="+234 800 000 0000"
                   />
                   {errors.phone && (
@@ -219,7 +260,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-purple-900 mb-1.5">
+                  <label htmlFor="message" className="block text-sm font-medium text-green-900 mb-1.5">
                     Message
                   </label>
                   <textarea
@@ -231,8 +272,8 @@ export default function Contact() {
                     aria-invalid={!!errors.message}
                     aria-describedby={errors.message ? 'message-error' : undefined}
                     className={`w-full px-4 py-3 rounded-xl border ${
-                      errors.message ? 'border-red-400' : 'border-purple-100'
-                    } focus:border-purple outline-none transition-colors resize-none`}
+                      errors.message ? 'border-red-400' : 'border-green-100'
+                    } focus:border-green outline-none transition-colors resize-none`}
                     placeholder="How can we help you?"
                   />
                   {errors.message && (
@@ -242,8 +283,21 @@ export default function Contact() {
                   )}
                 </div>
 
-                <button type="submit" className="btn-primary w-full sm:w-auto">
-                  Send Message <FaPaperPlane size={14} />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round" />
+                      </svg>
+                      Sending…
+                    </>
+                  ) : (
+                    <>Send Message <FaPaperPlane size={14} /></>
+                  )}
                 </button>
               </form>
             )}
